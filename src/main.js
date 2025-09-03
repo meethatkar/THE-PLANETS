@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import gsap from 'gsap';
 
-
+const loaderDiv = document.getElementById('loader');
 
 // Set up scene, camera, renderer
 const scene = new THREE.Scene();
@@ -45,6 +45,32 @@ const starMaterial = new THREE.MeshBasicMaterial({
 const starSphere = new THREE.Mesh(starGeometry, starMaterial);
 scene.add(starSphere);
 
+THREE.DefaultLoadingManager.onStart = function ( url, itemsLoaded, itemsTotal ) {
+
+  console.log( 'Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.' );
+
+};
+
+THREE.DefaultLoadingManager.onLoad = function ( ) {
+
+  console.log( 'Loading Complete!');
+  if (loaderDiv) {
+    loaderDiv.style.display = 'none';
+  }
+
+};
+
+THREE.DefaultLoadingManager.onProgress = function ( url, itemsLoaded, itemsTotal ) {
+
+  console.log( 'Loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.' );
+
+};
+
+THREE.DefaultLoadingManager.onError = function ( url ) {
+
+  console.log( 'There was an error loading ' + url );
+
+};
 
 // SPHERE CONFIG
 let radius = 1;
@@ -133,20 +159,22 @@ function throttledWheelHandler(event) {
         counter++;      //INCREMENT ON NEXT PLANET
       }
       else {
-        gsap.to(h1s_div, {
-          y: `+=${100}%`,
-          duration: 1,
-          ease: "expo.inOut"
-        });
-
-        // SPHERE ANIMATINO LOGIC
-        // PLANET ROTATION
-        gsap.to(spheres.rotation, {
-          y: `-=${Math.PI / 2 }`,
-          duration: 1,
-          ease: "expo.inOut"
-        })
-        counter--;      //DECREMENT ON PREVIOUS PLANET; SO LOGIC NOT BREAKS
+        if(counter!==0){
+          gsap.to(h1s_div, {
+            y: `+=${100}%`,
+            duration: 1,
+            ease: "expo.inOut"
+          });
+  
+          // SPHERE ANIMATINO LOGIC
+          // PLANET ROTATION
+          gsap.to(spheres.rotation, {
+            y: `-=${Math.PI / 2 }`,
+            duration: 1,
+            ease: "expo.inOut"
+          })
+          counter--;      //DECREMENT ON PREVIOUS PLANET; SO LOGIC NOT BREAKS
+        }
       }
     }
   }
@@ -172,7 +200,7 @@ function addCursorEffectToScrollDiv() {
     scrollDiv.style.pointerEvents = 'none';
     scrollDiv.style.top = `${e.clientY}px`;
     scrollDiv.style.left = `${e.clientX}px`;
-    console.log(e.clientX);
+    // console.log(e.clientX);
     
   });
 }
