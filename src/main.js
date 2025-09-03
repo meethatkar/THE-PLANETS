@@ -182,6 +182,29 @@ function throttledWheelHandler(event) {
 
 window.addEventListener("wheel", throttledWheelHandler);
 
+// FOR MOBILE 
+let touchStartY = 0;
+
+window.addEventListener("touchstart", (e) => {
+  touchStartY = e.touches[0].clientY;   // starting position
+});
+
+window.addEventListener("touchend", (e) => {
+  const touchEndY = e.changedTouches[0].clientY;
+  const diffY = touchStartY - touchEndY;
+
+  if (Math.abs(diffY) > 50) { // threshold to avoid small touches
+    if (diffY > 0) {
+      // Swipe UP -> same as wheel "down"
+      throttledWheelHandler({ deltaY: 1 });
+    } else {
+      // Swipe DOWN -> same as wheel "up"
+      throttledWheelHandler({ deltaY: -1 });
+    }
+  }
+});
+
+
 // Animation loop
 function animate() {
   requestAnimationFrame(animate);
