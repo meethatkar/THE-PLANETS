@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite App</title>
+  </head>
+  <body class="bg-black relative">
+    <div  id="cursor" class="fixed transition-all hidden md:block mix-blend-difference ease-linear duration-75 w-fit h-fit top-8 right-8 z-50  text-white px-4 border-1 border-white py-1 rounded-xs font-epunda-slab text-[1.1rem] pointer-events-none">
+      scroll to interact
+    </div>
+    <div  class="h-screen w-screen">
+      <div id="main" class="absolute h-screen w-screen inset-0 text-white z-1 ">
+        <nav class="w-full flex items-center justify-between py-5 px-5 font-epunda-slab">
+          <h1>THE PLANETS </h1>
+          <div>
+          <a href="/" class="px-3 hover:underline">Home</a>
+          <a href="/about" class="px-3 hover:underline">About</a>
+          <a href="/contact" class="px-3 hover:underline">Contact</a>
+          </div>
+        </nav>
+        <div id="text-div" class="text-center absolute top-[15%] md:top-[10%] left-1/2 -translate-x-1/2">
+          <div id="h1s" class="font-tangerine w-fit h-[13vmin] text-[6vmax] mx-auto overflow-hidden">
+            <h1 class="h-full tracking-tighter leading-none"> EARTH </h1>
+            <h1 class="h-full tracking-tighter leading-none"> VENUS </h1>
+            <h1 class="h-full tracking-tighter leading-none"> VOLCANIC </h1>
+            <h1 class="h-full tracking-tighter leading-none"> CSILLA </h1>
+          </div>
+          <p class="font-epunda-slab text-[1.1vmax] -mb-[2vmin] whitespace-nowrap">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam, molestias.</p>
+          <span class="w-full inline-block h-[2px] bg-gradient-to-r from-transparent via-white to-transparent"></span>
+        </div>
+      </div>
+      <canvas class="w-screen h-screen bg-black"></canvas>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
