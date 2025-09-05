@@ -2,6 +2,7 @@ import './style.css'
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import gsap from 'gsap';
+import { Clock } from 'three';
 
 const loaderDiv = document.getElementById('loader');
 
@@ -80,6 +81,7 @@ let orbitRadius = 3;
 const spheres = new THREE.Group();
 // const textures_arr = ['./csilla/clouds.png', './csilla/color.png', './earth/clouds.jpg', './earth/map.jpg', './venus/map.jpg', './csilla/clouds.png', 'volcanic/color.png']
 const textures_arr = ['./color.webp', './earth.webp', './venus.webp', './volcano.webp'];
+const planets_arr =[];
 
 // RESIZING
 window.innerWidth < 500 ? radius = 0.7 : radius = 1;
@@ -95,6 +97,7 @@ for (let i = 0; i < 4; i++) {
   const angle = [(i / 4) * (Math.PI * 2)];
   sphere.position.x = orbitRadius * Math.cos(angle);
   sphere.position.z = orbitRadius * Math.sin(angle);
+  planets_arr.push(sphere);
   spheres.add(sphere);
 }
 
@@ -204,12 +207,16 @@ window.addEventListener("touchend", (e) => {
   }
 });
 
+const clock = new THREE.Clock();
 
 // Animation loop
 function animate() {
   requestAnimationFrame(animate);
   // spheres.rotation.y += 0.01;
   // controls.update();
+  planets_arr.forEach((planet)=>{
+    planet.rotation.y = clock.getElapsedTime()*0.01;
+  })
   renderer.render(scene, camera);
 }
 animate();
